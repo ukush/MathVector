@@ -1,6 +1,8 @@
 #include "MVector.h"
 #include <malloc.h>
 #include <iostream>
+#include <cmath>
+
 
 using namespace std;
 
@@ -16,7 +18,6 @@ MVector::~MVector()
 
 }
 
-
 int MVector::getSize()
 {
 	return this->size;
@@ -26,80 +27,101 @@ double* MVector::getData()
 {
 	return this->data; // returns the location address of our array
 }
-void MVector::setSize(int theSize)
-{
-	this->size = theSize;
-}
 
 void MVector::setDataElements(double dataValue, int index)
 {
 	this->data[index] = dataValue;
-	
+
 }
 
-//Display vector to the screen
-void MVector::displayVector(double* dataptr, int size)
+//Display vector data to the screen
+void MVector::displayVector(double* vecArr, int size)
 {
 
-	cout << "Vector size: " << this->getSize() << "\n";
-	cout << "Vector data: ";
+	cout << "Vector size: " << this->getSize();
+	cout << "\nVector data: ";
 	for (int i = 0; i < size; i++)
 	{
-		cout << dataptr[i] << ", ";
+		cout << vecArr[i] << ", ";
 	}
-	cout << "\n";
+	cout << "\n\n";
 }
 
-MVector* MVector::addVectors(MVector* vec1, MVector* vec2)
+MVector* MVector::addVectors(double* vec1Arr, double* vec2Arr, int size)
 {
-	MVector* vec3 = new MVector(10);
-
 	// loop through vec1 and vec 2, adding the value of the indexes together and assign to vec3
 	// i.e vec3[i] = ve1[i] + vec2[i]
 
-	for (int i = 0; i < vec1->getSize(); i++)
-	{
-		// access the values of the vector
-		vec3->getData()[i] = vec1->getData()[i] + vec2->getData()[i];
-	}
+	MVector* vec3 = new MVector(size);
 
+	double val;
+
+	for (int i = 0; i < size; i++)
+	{
+		val = vec1Arr[i] + vec2Arr[i];
+		vec3->setDataElements(val, i);
+	}
 	return vec3;
 }
 
-int main()
+double MVector::generateMagnitude(double* vecArr, int size)
 {
-	// create pointers for the newly created vector objects 
-	MVector* vec1 = new MVector(10);
-	MVector* vec2 = new MVector(10);
+	double sum = 0;
 
-	// Set the elements of the data array to 1,2,3....10
-	for (int i = 0; i < vec1->getSize(); i++)
+	//iterate through the array and sum all the elements
+	for (int i = 0; i < size; i++)
 	{
-		vec1->setDataElements(i, i);
+		// calculate sum
+		// square the elements and add to sum
+		sum += (vecArr[i] * vecArr[i]);
 	}
-
-	// print out vector 
-	vec1->displayVector(vec1->getData(), vec1->getSize());
-
-	cout << "\n";
-
-	cout << "This vector has " << vec2->getSize() << " elements\n"; // show number of elements
-
-	// set values for vec2 data
-	for (int i = 0; i < vec2->getSize(); i++)
-	{
-		// Allow user to set the values for the vector themselves
-		cout << "Enter value #" << (i+1) << " to set the vector element: ";
-		int val;
-		cin >> val;
-		vec2->setDataElements(val, i); // set values
-	}
-
-	vec2->displayVector(vec2->getData(), vec2->getSize());
-
-	// add two vectors together
-	
-
-	return 0;
+	return sqrt(sum);
 }
+
+MVector* MVector::normaliseVector(double* vecArr, double magnitude, int size)
+{
+	// Normalise vector means to divide each element by it's magnitde to get 1
+	// Take in a vector
+	// Copy all elements to a newly created vector
+	// calcualte its magnitude 
+	// divide each element by the magnitude
+
+
+	// create a new vector with the same size as the original vector
+	MVector* normalisedVector = new MVector(size);
+
+	// set all elements of new vector to be same as the original
+	// and divide by 
+	for (int i = 0; i < size; i++)
+	{
+		normalisedVector->setDataElements(vecArr[i]/magnitude, i);
+	}
+
+	return normalisedVector;
+}
+
+double MVector::dotProductUsingCos(double magnitude1, double magnitude2, int angle)
+{
+	// The dot product is also known as the scalar value
+	// it is calculated by multiplying magnitudes of the two vectors and the cosign of the angle between the two vectors
+
+	return magnitude1 * magnitude2 * (cos(angle));
+}
+
+double MVector::dotProductByMultiplying(double* vec1Arr, double* vec2Arr, int size)
+{
+	// We can also calcualte the dot products by simply multiplying the vectors together
+	double dotProduct = 0;
+
+	for (int i = 0; i < size; i++)
+	{
+		dotProduct += (vec1Arr[i] * vec2Arr[i]);
+	}
+
+	return dotProduct;
+}
+
+
+
+
 

@@ -15,21 +15,23 @@ public:
 	// Destructor
 	~MVector();
 
-	// Accessor methods
 	int getSize();
+
 	double* getData();
 
-	//mutator method
-	void setSize(int theSize);
-
-	// Set elements of the data variable
 	void setDataElements(double dataValue, int index);
 
-	// Display vector to the screen
-	void displayVector(double* dataptr, int size);
+	void displayVector(double* vecArr, int size);
 
-	// Method to add two vectors together
-	MVector* addVectors(MVector* vec1, MVector* vec2);
+	MVector* addVectors(double* vec1Arr, double* vec2Arr, int size);
+
+	double generateMagnitude(double* vecArr, int size);
+
+	MVector* normaliseVector(double* vecArr, double magnitude, int size);
+
+	double dotProductUsingCos(double magnitude1, double magnitude2, int angle);
+
+	double dotProductByMultiplying(double* vec1Arr, double* vec2Arr, int size);
 
 
 };
