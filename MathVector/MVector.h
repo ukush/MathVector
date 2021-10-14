@@ -21,17 +21,17 @@ public:
 
 	void setDataElements(double dataValue, int index);
 
-	void displayVector(double* vecArr, int size);
+	void displayVector(MVector* vec);
 
-	MVector* addVectors(double* vec1Arr, double* vec2Arr, int size);
+	MVector* addVectors(MVector* vec2);
 
-	double generateMagnitude(double* vecArr, int size);
+	double generateMagnitude(MVector* vec);
 
-	MVector* normaliseVector(double* vecArr, double magnitude, int size);
+	MVector* normaliseVector(MVector* vec, double magnitude);
 
 	double dotProductUsingCos(double magnitude1, double magnitude2, int angle);
 
-	double dotProductByMultiplying(double* vec1Arr, double* vec2Arr, int size);
+	double dotProductByMultiplying(MVector* vec2);
 
 
 };

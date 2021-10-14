@@ -18,7 +18,7 @@ int main()
 	}
 
 	// print out vector 
-	vec1->displayVector(vec1->getData(), vec1->getSize());
+	vec1->displayVector(vec1);
 
 	// set values for vec2 data
 	for (int i = 0; i < vec2->getSize(); i++)
@@ -31,31 +31,31 @@ int main()
 	}
 
 	// Display values of new vector
-	vec2->displayVector(vec2->getData(), vec2->getSize());
+	vec2->displayVector(vec2);
 
 	// Add vec1 and vec2 and return a new vector called vec3
 	cout << "Adding vectors...\n";
-	MVector* vec3 = vec1->addVectors(vec1->getData(), vec2->getData(), vec1->getSize());
+	MVector* vec3 = vec1->addVectors(vec2);
 
 	//print out vec3
-	vec3->displayVector(vec3->getData(), vec3->getSize());
+	vec3->displayVector(vec3);
 
 	// get rid of dangling vec3 pointer
 	delete vec3;
 
 	// generate magnitude
 	cout << "Calculating Magnitude...\n";
-	double magnitude = vec2->generateMagnitude(vec2->getData(), vec2->getSize());
+	double magnitude = vec2->generateMagnitude(vec2);
 
 	//print magnitude
 	cout << "Vector Magnitude: " << magnitude << "\n\n";
 
 	// Normalise vec2 
 	cout << "Normalising vector...\n";
-	MVector* normalisedVector = vec2->normaliseVector(vec2->getData(), magnitude, vec2->getSize());
+	MVector* normalisedVector = vec2->normaliseVector(vec2, magnitude);
 
 	// print out normalised vector elements
-	normalisedVector->displayVector(normalisedVector->getData(), normalisedVector->getSize());
+	normalisedVector->displayVector(normalisedVector);
 
 	// delete dangling pointer
 	delete normalisedVector;
@@ -63,7 +63,7 @@ int main()
 	// calculate dot product (multiplication) of two vectors (vec1 and 2)
 	// First calculate the two magnitudes
 	// magnitude for vec2 has already been calculated
-	double mag1 = vec1->generateMagnitude(vec1->getData(), vec1->getSize());
+	double mag1 = vec1->generateMagnitude(vec1);
 	double mag2 = magnitude;
 
 	cout << "Calculating the dot product using the cosign method...\n";
@@ -71,7 +71,7 @@ int main()
 	cout << "The dot product (scalar) of vector 1 and vector 2 is: " << dotProduct << "\n\n";
 
 	cout << "Calculating the dot product using the multiplication method...\n";
-	double dotProd = vec1->dotProductByMultiplying(vec1->getData(), vec2->getData(), vec1->getSize());
+	double dotProd = vec1->dotProductByMultiplying(vec2);
 	cout << "The dot product (scalar) of vector 1 and vector 2 is: " << dotProd << "\n";
 
 	// delete dangling pointers

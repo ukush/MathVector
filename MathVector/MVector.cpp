@@ -35,19 +35,18 @@ void MVector::setDataElements(double dataValue, int index)
 }
 
 //Display vector data to the screen
-void MVector::displayVector(double* vecArr, int size)
+void MVector::displayVector(MVector* vec)
 {
-
-	cout << "Vector size: " << this->getSize();
+	cout << "Vector size: " << getSize();
 	cout << "\nVector data: ";
 	for (int i = 0; i < size; i++)
 	{
-		cout << vecArr[i] << ", ";
+		cout << vec->getData()[i] << ", ";
 	}
 	cout << "\n\n";
 }
 
-MVector* MVector::addVectors(double* vec1Arr, double* vec2Arr, int size)
+MVector* MVector::addVectors(MVector* vec2)
 {
 	// loop through vec1 and vec 2, adding the value of the indexes together and assign to vec3
 	// i.e vec3[i] = ve1[i] + vec2[i]
@@ -58,27 +57,27 @@ MVector* MVector::addVectors(double* vec1Arr, double* vec2Arr, int size)
 
 	for (int i = 0; i < size; i++)
 	{
-		val = vec1Arr[i] + vec2Arr[i];
+		val = data[i] + vec2->getData()[i];
 		vec3->setDataElements(val, i);
 	}
 	return vec3;
 }
 
-double MVector::generateMagnitude(double* vecArr, int size)
+double MVector::generateMagnitude(MVector* vec)
 {
 	double sum = 0;
 
 	//iterate through the array and sum all the elements
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < vec->getSize(); i++)
 	{
 		// calculate sum
 		// square the elements and add to sum
-		sum += (vecArr[i] * vecArr[i]);
+		sum += (vec->getData()[i] * vec->getData()[i]);
 	}
 	return sqrt(sum);
 }
 
-MVector* MVector::normaliseVector(double* vecArr, double magnitude, int size)
+MVector* MVector::normaliseVector(MVector* vec, double magnitude)
 {
 	// Normalise vector means to divide each element by it's magnitde to get 1
 	// Take in a vector
@@ -92,9 +91,9 @@ MVector* MVector::normaliseVector(double* vecArr, double magnitude, int size)
 
 	// set all elements of new vector to be same as the original
 	// and divide by 
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < vec->getSize(); i++)
 	{
-		normalisedVector->setDataElements(vecArr[i]/magnitude, i);
+		normalisedVector->setDataElements(vec->getData()[i]/magnitude, i);
 	}
 
 	return normalisedVector;
@@ -108,14 +107,14 @@ double MVector::dotProductUsingCos(double magnitude1, double magnitude2, int ang
 	return magnitude1 * magnitude2 * (cos(angle));
 }
 
-double MVector::dotProductByMultiplying(double* vec1Arr, double* vec2Arr, int size)
+double MVector::dotProductByMultiplying(MVector* vec2)
 {
-	// We can also calcualte the dot products by simply multiplying the vectors together
+	// We can also calcualte the dot products by simply multiplying elements in corresponding indexes together
 	double dotProduct = 0;
 
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < vec2->getSize(); i++)
 	{
-		dotProduct += (vec1Arr[i] * vec2Arr[i]);
+		dotProduct += (data[i] * vec2->getData()[i]);
 	}
 
 	return dotProduct;
