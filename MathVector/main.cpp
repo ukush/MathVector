@@ -3,11 +3,55 @@
 
 using namespace std;
 
+struct AllocationMetrics
+{
+	uint32_t TotalAllocated = 0;
+	uint32_t TotalFreed = 0;
+
+	uint32_t CurrentUsage() { return TotalAllocated - TotalFreed;  }
+
+};
+
+static AllocationMetrics s_AllocationMetrics;
+
+void* operator new (size_t size)
+{
+	cout << "Allocating " << size << " bytes for MVector Object\n";
+	s_AllocationMetrics.TotalAllocated += size;
+
+	return malloc(size);
+}
+
+void operator delete(void* memory, size_t size)
+{
+	cout << "Freeing " << size << " bytes for MVector Object\n";
+	s_AllocationMetrics.TotalFreed += size;
+
+	free(memory);
+}
+
+static void PrintMemoryUsage()
+{
+	cout << "Cuurent Memory Usage: " << s_AllocationMetrics.CurrentUsage() << " bytes\n";
+}
+
 int main()
 {
+	//---------------------Detect Memory Leaks--------------------------------//
+
+	#ifdef _DEBUG
+		//_CrtSetBreakAlloc(200);
+		_onexit(_CrtDumpMemoryLeaks);
+	#endif
+
+	
+
+
 	// create pointers for the newly created vector objects 
 	MVector* vec1 = new MVector(10);
 	MVector* vec2 = new MVector(10);
+	
+	PrintMemoryUsage();
 
 	cout << "Setting vector elements...\n";
 
@@ -37,11 +81,15 @@ int main()
 	cout << "Adding vectors...\n";
 	MVector* vec3 = vec1->addVectors(vec2);
 
+	PrintMemoryUsage();
+
 	//print out vec3
 	vec3->displayVector(vec3);
 
 	// get rid of dangling vec3 pointer
 	delete vec3;
+
+	PrintMemoryUsage();
 
 	// generate magnitude
 	cout << "Calculating Magnitude...\n";
@@ -54,11 +102,15 @@ int main()
 	cout << "Normalising vector...\n";
 	MVector* normalisedVector = vec2->normaliseVector(vec2, magnitude);
 
+	PrintMemoryUsage();
+
 	// print out normalised vector elements
 	normalisedVector->displayVector(normalisedVector);
 
 	// delete dangling pointer
 	delete normalisedVector;
+
+	PrintMemoryUsage();
 
 	// calculate dot product (multiplication) of two vectors (vec1 and 2)
 	// First calculate the two magnitudes
@@ -76,7 +128,12 @@ int main()
 
 	// delete dangling pointers
 	delete vec1;
+	
+	PrintMemoryUsage();
+
 	delete vec2;
+
+	PrintMemoryUsage();
 
 
 
