@@ -3,6 +3,8 @@
 
 using namespace std;
 
+// not sure if you have pulled these from elsewhere or coded them yourself???
+// good to see you have taken an interest in digging deeper into memory management though
 struct AllocationMetrics
 {
 	uint32_t TotalAllocated = 0;
@@ -34,6 +36,7 @@ static void PrintMemoryUsage()
 {
 	cout << "Cuurent Memory Usage: " << s_AllocationMetrics.CurrentUsage() << " bytes\n";
 }
+// end of block???
 
 int main()
 {
@@ -87,20 +90,21 @@ int main()
 	vec3->displayVector(vec3);
 
 	// get rid of dangling vec3 pointer
-	delete vec3;
+	delete vec3;	// this doesn't get rid fo the dangling pointer, this releases the memory
+	vec3=nullptr; // this gets rid of the dangling pointer
 
 	PrintMemoryUsage();
 
 	// generate magnitude
 	cout << "Calculating Magnitude...\n";
-	double magnitude = vec2->generateMagnitude(vec2);
+	double magnitude = vec2->generateMagnitude();//vec2);
 
 	//print magnitude
 	cout << "Vector Magnitude: " << magnitude << "\n\n";
 
 	// Normalise vec2 
 	cout << "Normalising vector...\n";
-	MVector* normalisedVector = vec2->normaliseVector(vec2, magnitude);
+	MVector* normalisedVector = vec2->normaliseVector();//vec2, magnitude);
 
 	PrintMemoryUsage();
 
@@ -115,7 +119,7 @@ int main()
 	// calculate dot product (multiplication) of two vectors (vec1 and 2)
 	// First calculate the two magnitudes
 	// magnitude for vec2 has already been calculated
-	double mag1 = vec1->generateMagnitude(vec1);
+	double mag1 = vec1->generateMagnitude();//vec1);
 	double mag2 = magnitude;
 
 	cout << "Calculating the dot product using the cosign method...\n";

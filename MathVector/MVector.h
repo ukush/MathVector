@@ -17,7 +17,8 @@ public:
 
 	int getSize();
 
-	double* getData();
+	// avoid returning this objects memory to the outside world as you are effectively loosing control of it then
+//	double* getData();
 
 	void setDataElements(double dataValue, int index);
 
@@ -25,9 +26,9 @@ public:
 
 	MVector* addVectors(MVector* vec2);
 
-	double generateMagnitude(MVector* vec);
+	double generateMagnitude();//MVector* vec);
 
-	MVector* normaliseVector(MVector* vec, double magnitude);
+	MVector* normaliseVector();//MVector* vec, double magnitude);	// normalise would usually result in a magnitude of 1, but perhaps a moot point as it is the code itself that is more interesting here than the mechanics
 
 	double dotProductUsingCos(double magnitude1, double magnitude2, int angle);
 
