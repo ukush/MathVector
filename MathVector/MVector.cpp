@@ -18,11 +18,6 @@ int MVector::getSize()
 {
 	return this->size;
 }
-/*
-double* MVector::getData()
-{
-	return this->data; // returns the location address of our array
-}*/
 
 void MVector::setDataElements(double dataValue, int index)
 {
@@ -30,22 +25,22 @@ void MVector::setDataElements(double dataValue, int index)
 
 }
 
-MVector* MVector::addVectors(MVector* vec2)
+MVector* MVector::addVectors(MVector* vec)
 {
 	// loop through vec1 and vec 2, adding the value of the indexes together and assign to vec3
 	// i.e vec3[i] = ve1[i] + vec2[i]
 
-	MVector* vec3 = new MVector(size);
+	// what if the sizes are not the same??
+	// make sure they are the same!
+	assert(size == vec->size);
 
-	double val;
+	MVector* res = new MVector(size); // dont need to free up memory in this fucntion
 
 	for (int i = 0; i < size; i++)
 	{
-		//		val = data[i] + vec2->getData()[i];
-		//		vec3->setDataElements(val, i);
-		vec3->data[i] = data[i] + vec2->data[i];	// we haven't covered this yet, but instances of the same class can access private data members
+		res->data[i] = data[i] + vec->data[i];	// we haven't covered this yet, but instances of the same class can access private data members because you are still IN THE CLASS
 	}
-	return vec3;
+	return res;
 }
 
 // overloaded addVector method
@@ -61,7 +56,7 @@ MVector* MVector::addVectors(int value)
 }
 
 
-double MVector::generateMagnitude(/*MVector* vec*/)	// you want to calculate the magnitue of "this" vector
+double MVector::generateMagnitude()
 {
 	double sum = 0;
 
@@ -75,7 +70,7 @@ double MVector::generateMagnitude(/*MVector* vec*/)	// you want to calculate the
 	return sqrt(sum);
 }
 
-MVector* MVector::normaliseVector()//MVector* vec, double magnitude)
+MVector* MVector::normaliseVector()
 {
 	// Normalise vector means to divide each element by it's magnitde to get 1
 	// Take in a vector

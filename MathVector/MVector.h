@@ -1,5 +1,6 @@
 #pragma oncex
 #include <iostream>
+#include <assert.h>
 
 
 using namespace std;
@@ -45,12 +46,13 @@ public:
 	//overload addVectors method
 	MVector* addVectors(int value);
 
-	double generateMagnitude();//MVector* vec);
+	double generateMagnitude();
 
-	MVector* normaliseVector();//MVector* vec, double magnitude);	// normalise would usually result in a magnitude of 1, but perhaps a moot point as it is the code itself that is more interesting here than the mechanics
+	MVector* normaliseVector();
 
 	static double dotProductUsingCos(double magnitude1, double magnitude2, int angle);
 
 	double dotProductByMultiplying(MVector* vec2);
 
 };
+
